@@ -3,7 +3,10 @@ import _pickle as cPickle
 import sys
 import math
 import pyperclip
-import os
+import os 
+import pyautogui
+import winsound
+
 
 changeID = ""
 baseLink = "http://www.pathofexile.com/api/public-stash-tabs?id="
@@ -15,7 +18,14 @@ close = ""
 def pause():
     programPause = input("Item found and copied to clipboard \nPress <ENTER> to continue sniping\n")
 
-
+def sendWhisper():
+    pyautogui.press("enter")
+    pyautogui.keyDown("ctrl")
+    pyautogui.press("v")
+    pyautogui.keyUp("ctrl")
+    pyautogui.press("enter")
+    
+    
 print("Path of Exile Item Sniper")
 print("Enter '5' to end list and start sniping")
 while (close != "5"):
@@ -42,6 +52,10 @@ for x in massJson['stashes']:
                     print (x['accountName'] + " - " +y['typeLine'] + " - " + y['note'])
                     toClip = "@%s Hi I would like to buy your %s listed for %s" %(x['accountName'], y['typeLine'], y['note'])
                     pyperclip.copy(toClip)
+                    winsound.Beep(800, 200)
                     pause()
             
-        
+print("Script End")
+
+# To do, make script take change ID from json instead of the website. 
+#        refractor into funcions before it ends up a total mess
